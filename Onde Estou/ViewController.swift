@@ -12,6 +12,12 @@ import MapKit
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapa: MKMapView!
+    @IBOutlet weak var velocidadeLabel: UILabel!
+    @IBOutlet weak var latitudeLabel: UILabel!
+    @IBOutlet weak var longitudeLabel: UILabel!
+    @IBOutlet weak var enderecoLabel: UILabel!
+    
+    
     var gerenciadorLocalizacao = CLLocationManager()
     
     override func viewDidLoad() {
@@ -23,6 +29,20 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         gerenciadorLocalizacao.startUpdatingLocation()
         
     }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let localizacaoUsuario = locations.last!
+        
+        let latitude = localizacaoUsuario.coordinate.latitude
+        let longitude = localizacaoUsuario.coordinate.longitude
+        
+        latitudeLabel.text = String( latitude )
+        longitudeLabel.text = String( longitude )
+        velocidadeLabel.text = String ( localizacaoUsuario.speed )
+        
+    }
+    
     
     // abre a janela de configuracao do dispositivo para que o usuario habilite a permissao necessária
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

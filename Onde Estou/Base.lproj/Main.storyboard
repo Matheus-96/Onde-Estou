@@ -94,7 +94,7 @@
                                     <navigationItem title="Onde Estou?" id="3CL-45-h97"/>
                                 </items>
                             </navigationBar>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8xT-0J-Fb0">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8xT-0J-Fb0">
                                 <rect key="frame" x="0.0" y="285" width="414" height="451"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </mapView>
@@ -108,7 +108,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="enderecoLabel" destination="sQq-3f-0JG" id="rOn-wT-zMP"/>
+                        <outlet property="latitudeLabel" destination="vo3-vq-2y3" id="om9-Au-Jkk"/>
+                        <outlet property="longitudeLabel" destination="rxv-U2-CDN" id="2K5-3y-siH"/>
                         <outlet property="mapa" destination="8xT-0J-Fb0" id="tIW-xc-qS0"/>
+                        <outlet property="velocidadeLabel" destination="qjy-qr-IGh" id="5Xp-lr-osn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
