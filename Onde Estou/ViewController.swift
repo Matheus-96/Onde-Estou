@@ -37,9 +37,79 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         let latitude = localizacaoUsuario.coordinate.latitude
         let longitude = localizacaoUsuario.coordinate.longitude
         
+        //--- Exibe o local atual do usuário e centra o mapa nesse local
+        let localizacao = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let deltaLatitude: CLLocationDegrees = 0.01
+        let deltaLongitude: CLLocationDegrees = 0.01
+        let areaVisualizacao : MKCoordinateSpan = MKCoordinateSpan( latitudeDelta: deltaLatitude,  longitudeDelta: deltaLongitude)
+        
+        let regiao: MKCoordinateRegion = MKCoordinateRegion(center: localizacao, span: areaVisualizacao)
+        
+        mapa.setRegion(regiao, animated: true)
+        //---
+        
         latitudeLabel.text = String( latitude )
         longitudeLabel.text = String( longitude )
-        velocidadeLabel.text = String ( localizacaoUsuario.speed )
+        if localizacaoUsuario.speed > 0 {
+            velocidadeLabel.text = String ( localizacaoUsuario.speed )
+        }
+        //recuperar o endereco do usuário
+        
+        CLGeocoder().reverseGeocodeLocation(localizacaoUsuario) { (detalhesLocal, erro) in
+            
+            if erro == nil {
+                
+                if let dadosLocal = detalhesLocal?.first {
+                    var throughtfare = ""
+                    if dadosLocal.thoroughfare != nil {
+                        throughtfare = dadosLocal.thoroughfare!
+                    }
+                    var subThoroughfare = ""
+                    if dadosLocal.subThoroughfare != nil {
+                        subThoroughfare = dadosLocal.subThoroughfare!
+                    }
+                    var locality = ""
+                    if dadosLocal.locality != nil {
+                        locality = dadosLocal.locality!
+                    }
+                    var subLocality = ""
+                    if dadosLocal.subLocality != nil {
+                        subLocality = dadosLocal.subLocality!
+                    }
+                    var postalCode = ""
+                    if dadosLocal.postalCode != nil {
+                        postalCode = dadosLocal.postalCode!
+                    }
+                    var country = ""
+                    if dadosLocal.country != nil {
+                        country = dadosLocal.country!
+                    }
+                    var administrativeArea = ""
+                    if dadosLocal.administrativeArea != nil {
+                        administrativeArea = dadosLocal.administrativeArea!
+                    }
+                    var subAdministrativeArea = ""
+                    if dadosLocal.subAdministrativeArea != nil {
+                        subAdministrativeArea = dadosLocal.subAdministrativeArea!
+                    }
+                    
+                    self.enderecoLabel.text = throughtfare + "-" + subThoroughfare + "-" + locality + "-" + country
+                    
+                    print(  "\n / throughtfare:" +  throughtfare +
+                            "\n / subThoroughfare:" + subThoroughfare +
+                            "\n / locality:" + locality +
+                            "\n / subLocality:" + subLocality +
+                            "\n / postalCode:" + postalCode +
+                            "\n / country:" + country +
+                            "\n / administrativeArea:" + administrativeArea +
+                            "\n / subAdministrativeArea:" + subAdministrativeArea
+                    )
+                
+            } else {
+                //acobnteceu erro e nao foi possivel recuperar o endereco
+                print(erro)
+            }
+        }
         
     }
     
@@ -67,3 +137,4 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
 }
 
+}
